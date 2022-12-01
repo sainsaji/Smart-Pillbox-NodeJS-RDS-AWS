@@ -49,9 +49,16 @@ app.get('/setter',(req, res)=>{
 
 app.get('/', (req, res)=>{
     res.render('dashboard',{
-        title:"Dashbaord"
+        title:"Dashboard"
     });
 });
+
+app.get('/schedule', (req, res)=>{
+    res.render('schedule',{
+        title:"Schedule Pills"
+    });
+});
+
 
 app.listen(port,()=>{
     console.log('Smart Pill Box is running on port:',port)
