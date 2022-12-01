@@ -24,6 +24,7 @@ connection.connect(function(error){
     else console.log('DB connection established');
 });
 
+app.use(express.static(path.join(__dirname,'styles')));
 //Setting Up View Engine
 app.set('views',path.join(__dirname, 'views'));
 app.set('view engine','ejs');
