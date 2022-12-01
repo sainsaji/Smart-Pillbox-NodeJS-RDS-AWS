@@ -24,6 +24,13 @@ connection.connect(function(error){
     else console.log('DB connection established');
 });
 
+//Setting Up View Engine
+app.set('views',path.join(__dirname, 'views'));
+app.set('view engine','ejs');
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: false}));
+
+
 app.get('/setter',(req, res)=>{
     let sql = "CREATE DATABASE IF NOT EXISTS  spb;"
     let starterquery = connection.query(sql,(err,rows)=>{
@@ -37,6 +44,12 @@ app.get('/setter',(req, res)=>{
         console.log("create table query run");
     });
 
+});
+
+app.get('/', (req, res)=>{
+    res.render('dashboard',{
+        title:"Dashbaord"
+    });
 });
 
 app.listen(port,()=>{
