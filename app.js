@@ -24,7 +24,7 @@ connection.connect(function(error){
     else console.log('DB connection established');
 });
 
-app.get('/',(req, res)=>{
+app.get('/setter',(req, res)=>{
     let sql = "CREATE DATABASE IF NOT EXISTS  spb;"
     let starterquery = connection.query(sql,(err,rows)=>{
         if(err) throw err;
