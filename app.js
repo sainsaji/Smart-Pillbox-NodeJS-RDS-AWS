@@ -12,7 +12,7 @@ const connection = mysql.createConnection({
     host:"testdb.cergfpiaziwa.us-east-1.rds.amazonaws.com",
     user:"admin",
     password:"12345678",
-    // database:"covid19",
+    database:"spb",
     port:"3306",
     connectionLimit: 15,
     queueLimit: 30,
