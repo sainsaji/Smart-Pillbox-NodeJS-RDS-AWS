@@ -23,7 +23,7 @@ connection.connect(function(error){
 });
 
 app.get('/',(req, res)=>{
-    let sql = "CREATE IF NOT EXISTS DATABASE spb;"
+    let sql = "CREATE DATABASE IF NOT EXISTS  spb;"
     let starterquery = connection.query(sql,(err,rows)=>{
         if(err) throw err;
         console.log("DATABASE create query run");
