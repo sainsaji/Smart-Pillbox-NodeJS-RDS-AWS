@@ -19,7 +19,15 @@ const connection = mysql.createConnection({
 
 connection.connect(function(error){
     if(!!error) console.log(error);
-    else console.log('connection established');
+    else console.log('DB connection established');
+});
+
+app.get('/',(req, res)=>{
+    let sql = "CREATE IF NOT EXISTS DATABASE spb;"
+    let starterquery = connection.query(sql,(err,rows)=>{
+        if(err) throw err;
+        console.log("DATABASE create query run");
+    });
 });
 
 app.listen(port,()=>{
