@@ -4,19 +4,22 @@ const ejs = require('ejs');
 const bodyParser = require('body-parser');
 const mysql = require('mysql');
 const app = express();
-const port = 4000;
+const hostconfig = require('./config/host-config');
+const dbconfig = require('./config/db-config');
+
+const port = hostconfig.port;
 
 var spbtable = "spbtable";
 
 const connection = mysql.createConnection({
-    host:"localhost",
-    user:"root",
-    password:"",
-    database:"spb",
-    port:"3306",
-    connectionLimit: 15,
-    queueLimit: 30,
-    acquireTimeout: 1000000
+    host:dbconfig.host,
+    user:dbconfig.user,
+    password:dbconfig.password,
+    database:dbconfig.database,
+    port:dbconfig.port,
+    connectionLimit: dbconfig.connectionLimit,
+    queueLimit: dbconfig.queueLimit,
+    acquireTimeout: dbconfig.acquireTimeout
 });
 
 connection.connect(function(error){
@@ -49,7 +52,7 @@ app.get('/setter',(req, res)=>{
 });
 
 app.get('/', (req, res)=>{
-    res.render('dashboard',{
+    res.render('pages/dashboard',{
         title:"Dashboard"
     });
 });
@@ -61,27 +64,27 @@ app.get('/tests', (req, res)=>{
 });
 
 app.get('/schedule', (req, res)=>{
-    res.render('schedule',{
+    res.render('pages/schedule',{
         title:"Schedule Pills"
     });
 });
 
 
 app.get('/calendar', (req, res)=>{
-    res.render('calendar',{
+    res.render('pages/calendar',{
         title:"Calendar"
     });
 });
 
 app.get('/mqtt', (req, res)=>{
-    res.render('mqtt',{
+    res.render('pages/mqtt',{
         title:"MQTT Logs"
     });
 });
 
 app.get('/settings', (req, res)=>{
-    res.render('settings',{
-        title:"Settings"
+    res.render('pages/settings',{
+        title:"Settings",
     });
 });
 
