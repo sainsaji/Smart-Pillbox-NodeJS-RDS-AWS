@@ -9,9 +9,9 @@ const port = 4000;
 var spbtable = "spbtable";
 
 const connection = mysql.createConnection({
-    host:"testdb.cergfpiaziwa.us-east-1.rds.amazonaws.com",
-    user:"admin",
-    password:"12345678",
+    host:"localhost",
+    user:"root",
+    password:"",
     database:"spb",
     port:"3306",
     connectionLimit: 15,
@@ -27,6 +27,7 @@ connection.connect(function(error){
 app.use(express.static(path.join(__dirname,'static')));
 //Setting Up View Engine
 app.set('views',path.join(__dirname, 'views'));
+app.set('content',path.join(__dirname, 'views/content'));
 app.set('view engine','ejs');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
@@ -53,12 +54,36 @@ app.get('/', (req, res)=>{
     });
 });
 
+app.get('/tests', (req, res)=>{
+    res.render('pages/tests',{
+        title:"Test"
+    });
+});
+
 app.get('/schedule', (req, res)=>{
     res.render('schedule',{
         title:"Schedule Pills"
     });
 });
 
+
+app.get('/calendar', (req, res)=>{
+    res.render('calendar',{
+        title:"Calendar"
+    });
+});
+
+app.get('/mqtt', (req, res)=>{
+    res.render('mqtt',{
+        title:"MQTT Logs"
+    });
+});
+
+app.get('/settings', (req, res)=>{
+    res.render('settings',{
+        title:"Settings"
+    });
+});
 
 app.listen(port,()=>{
     console.log('Smart Pill Box is running on port:',port)
