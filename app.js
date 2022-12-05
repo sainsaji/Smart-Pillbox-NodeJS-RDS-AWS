@@ -18,6 +18,7 @@ const scheduleRoute = require('./routes/scheduleRoute');
 const setterRoute = require('./routes/setterRoute');
 const settingsRoute = require('./routes/settingsRoute');
 const testsRoute = require('./routes/testsRoute');
+const writeRoute = require('./routes/writeRoute');
 
 const connection = mysql.createConnection({
     host:dbconfig.host,
@@ -52,6 +53,7 @@ app.use(mqttRoute);
 app.use(testsRoute);
 app.use(scheduleRoute);
 app.use(calenderRoute);
+app.use(writeRoute);
 
 
 app.listen(port,()=>{
