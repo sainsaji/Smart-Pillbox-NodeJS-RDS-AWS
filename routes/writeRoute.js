@@ -1,12 +1,33 @@
 const express = require('express');
 const route = express.Router();
+const dbconfig = require('../config/db-config');
+const mysql = require('mysql');
+var spbtable = "spbtable";
+
+const connection = mysql.createConnection({
+    host:dbconfig.host,
+    user:dbconfig.user,
+    password:dbconfig.password,
+    database:dbconfig.database,
+    port:dbconfig.port,
+    connectionLimit: dbconfig.connectionLimit,
+    queueLimit: dbconfig.queueLimit,
+    acquireTimeout: dbconfig.acquireTimeout
+});
+
 
 route.post('/writeSchedule',(req, res) =>{
-    var datetime = {
-        scheduledtime: req.body.schedtime,
-        scheduleddate: req.body.scheddate,
-        repeat: req.body.repeat
+    var data = {
+        patientname: "test",
+        caretaker : "test",
+        caretakernum: 9000000000,
+        pillname: req.body.pillname,
+        pilldesc : req.body.pilldesc,
+        start_time: req.body.schedtime,
+        start_date: req.body.scheddate,
+        schedulestatus:"0",
     }
+    var repeat = req.body.repeat
     const date = new Date();
     function getNowDate() {
         let day = date.getDate().toString().padStart(2, "0");;
@@ -47,18 +68,23 @@ route.post('/writeSchedule',(req, res) =>{
     }
     function queryPrinter(schedDateArray)
     {
+        let sql = "INSERT INTO ?? SET ?";
         for(var i = 0; i <schedDateArray.length;i++)
         {
-            console.log("Insert into table set date: " + schedDateArray[i]+""+datetime.scheduledtime)
-            
-        };
+            data.start_date = schedDateArray[i];
+            let insQuery = connection.query(sql,[spbtable,data],(err,results)=>{
+                if(err) throw err
+                else console.log("insert sucess");
+        });
+        
     }
-    const d1 = new Date(datetime.scheduleddate);
+    }
+    const d1 = new Date(data.start_date);
     var schedDateArray = []
-    if (datetime.repeat==="true")
+    if (repeat==="true")
     {
         console.log("Repeat Enabled");   
-        schedDateArray =getDateArray(datetime.scheduleddate, (d1.setDate(d1.getDate()+7)));
+        schedDateArray =getDateArray(data.start_date, (d1.setDate(d1.getDate()+7)));
         
     }
     else
@@ -69,7 +95,8 @@ route.post('/writeSchedule',(req, res) =>{
     }
     console.log("final array:",schedDateArray)
     queryPrinter(schedDateArray)
-    res.redirect('/calendar')
+    res.redirect('/calendar');
+    
 })
 
 module.exports = route;
