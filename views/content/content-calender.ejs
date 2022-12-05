@@ -1,7 +1,20 @@
 <div class="boxContent">
     <div class="container">
-        <a href="/add" class="btn btn-primary btn-sm">Add Data</a>
-        <br>
+        <div class="container">
+            <div class="row">
+              <div class="col-2">
+                <a href="/scheduleNow" class="btn btn-success btn-sm">Schedule Now</a>
+              </div>
+              <div class="col-2">
+                <a href="/clearSchedule" class="btn btn-danger btn-sm">Clear Schedule</a>
+              </div>
+              <div class="col-2">
+                <a href="/schedule" class="btn btn-primary btn-sm">Add to Schedule</a>
+              </div>
+            </div>
+        </div>
+       
+        
         <br>
 
         <table class="table table-dark">
@@ -16,6 +29,24 @@
                 <th>Schedule Status</th>
                 <th>Action</th>
             </thead>
+            <tbody>
+                <% schedulelist.forEach(function(schedulelist) {%>
+                    <tr>
+                        <td><%= schedulelist.ID %></td>
+                        <td><%= schedulelist.patientname %></td>
+                        <td><%= schedulelist.caretaker %></td>
+                        <td><%= schedulelist.pillname %></td>
+                        <td><%= schedulelist.pilldesc %></td>
+                        <td><%= schedulelist.start_time %></td>
+                        <td><%= schedulelist.start_date %></td>
+                        <td><%= schedulelist.schedulestatus %></td>
+                        <td>
+                            <a href="edit/<%= schedulelist.ID %>" class="btn btn-secondary btn-sm">Edit</a>
+                            <a href="delete/<%= schedulelist.ID %>" class="btn btn-danger btn-sm">Delete</a>
+                        </td>
+                    </tr>
+                    <% });%>
+            </tbody>
           
         </table>
     </div>
