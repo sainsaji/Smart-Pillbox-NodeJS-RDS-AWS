@@ -6,10 +6,12 @@ const mysql = require('mysql');
 const app = express();
 const hostconfig = require('./config/host-config');
 const dbconfig = require('./config/db-config');
-
 const port = hostconfig.port;
 
 var spbtable = "spbtable";
+
+//Routes Set-up
+const dashboardRoute = require('./routes/dashboardRoute');
 
 const connection = mysql.createConnection({
     host:dbconfig.host,
@@ -36,6 +38,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
 
+//Route Use
+app.use(dashboardRoute);
+
+
 app.get('/setter',(req, res)=>{
     let sql = "CREATE DATABASE IF NOT EXISTS  spb;"
     let starterquery = connection.query(sql,(err,rows)=>{
@@ -51,11 +57,7 @@ app.get('/setter',(req, res)=>{
 
 });
 
-app.get('/', (req, res)=>{
-    res.render('pages/dashboard',{
-        title:"Dashboard"
-    });
-});
+
 
 app.get('/tests', (req, res)=>{
     res.render('pages/tests',{
