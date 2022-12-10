@@ -1,11 +1,27 @@
 const express = require('express');
 var moment = require('moment'); // require
+const mqtt = require('mqtt')
 const route = express.Router();
 const dbconfig = require('../config/db-config');
 const mysql = require('mysql');
 var spbtable = "spbtable";
 
 moment().format();
+
+//MQTT
+const url = 'ws://broker.emqx.io:8083/mqtt'
+const options = {
+    // Clean session
+    clean: true,
+    connectTimeout: 4000,
+    // Authentication
+    clientId: 'emqx_test',
+    username: 'emqx_test',
+    password: 'emqx_test',
+  }
+  
+  
+
 
 const connection = mysql.createConnection({
     host:dbconfig.host,
@@ -62,8 +78,39 @@ route.post('/writeTest', (req, res)=>{
                 else console.log("inserting test query sucess");
             });
             res.redirect('/tests');
-        
+            
     }
+    function mqttWrite()
+    {   
+        var nysqldata = ""
+        function getData()
+        {
+            let sql = "SELECT start_time,start_date FROM ??";
+            let query = connection.query(sql,["testtable"],(err,rows,res1)=>{
+                if(err) throw err;
+                mysqldata = rows;
+            });
+                
+        }
+        getData();
+        const client  = mqtt.connect(url, options)
+        client.on('connect', function () {
+            console.log('Connected')
+            // Subscribe to a topic
+            client.subscribe('test', function (err) {
+              if (!err) {
+                // Publish a message to a topic
+                client.publish('test', JSON.stringify(mysqldata))
+              }
+            })
+          })
+        client.on('message', function (topic, message) {
+        // message is Buffer
+        console.log(message.toString())
+        client.end()
+        })
+    }
+    mqttWrite();
     dropALL();
     queryPrinter();
 });
