@@ -42,7 +42,7 @@ route.post('/writeSchedule',(req, res) =>{
         return currentTime;
     }
     console.log(getNowDate());
-    console.log(getNowTime());
+   
 
 
     function dateRange(startDate, endDate, steps = 1) {

@@ -37,6 +37,7 @@ connection.connect(function(error){
 });
 
 app.use(express.static(path.join(__dirname,'static')));
+
 //Setting Up View Engine
 app.set('views',path.join(__dirname, 'views'));
 app.set('content',path.join(__dirname, 'views/content'));
