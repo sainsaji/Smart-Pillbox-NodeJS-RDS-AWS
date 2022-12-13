@@ -1,8 +1,8 @@
 {
     "host": "testdb.cergfpiaziwa.us-east-1.rds.amazonaws.com",
     "port": 3306,
-    "user": "root",
-    "password": "",
+    "user": "admin",
+    "password": "12345678",
     "database": "spb",
     "connectionLimit": 15,
     "queueLimit": 30,
