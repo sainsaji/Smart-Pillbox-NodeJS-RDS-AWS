@@ -15,9 +15,9 @@ const options = {
     clean: true,
     connectTimeout: 4000,
     // Authentication
-    clientId: 'emqx_test',
-    username: 'emqx_test',
-    password: 'emqx_test',
+    clientId: 'emqx_testo',
+    username: 'emqx_testo',
+    password: 'emqx_testo',
   }
   
   
