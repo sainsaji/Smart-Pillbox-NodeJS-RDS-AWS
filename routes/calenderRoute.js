@@ -4,6 +4,7 @@ const dbconfig = require('../config/db-config');
 const mysql = require('mysql');
 var spbtable = "spbtable";
 const mqtt = require('mqtt')
+const client = require("twilio")("ACa17ae3b337557bc9b97062d8fde8427d", "2935ae15bb70f47a44f39fe59358d87b");
 
 
 const connection = mysql.createConnection({
@@ -54,6 +55,13 @@ route.get('/clearSchedule', (req, res)=>{
 });
 
 route.get('/scheduleNow', (req, res)=>{
+    // client.messages
+    //     .create({
+    //         body: 'Alert: Take Your Medicine',
+    //         from: '+16508998979',
+    //         to: '+919113879508'
+    //     })
+    //     .then(message => console.log(message.sid));
     function mqttWrite()
     {   
         var mysqldata = ""
@@ -63,28 +71,31 @@ route.get('/scheduleNow', (req, res)=>{
             let query = connection.query(sql,["spbtable"],(err,rows,res1)=>{
                 if(err) throw err;
                 mysqldata = rows;
-                
             }); 
+            
         }
         getData();
         const client  = mqtt.connect(url, options)
         client.on('connect', function () {
             console.log('Connected')
             // Subscribe to a topic
-            client.subscribe('test', function (err) {
+            client.subscribe('spb', function (err) {
               if (!err) {
                 // Publish a message to a topic
                 var sendString = JSON.stringify(mysqldata).replaceAll('"', '');
                 var countOfSchedule = (sendString.match(/start_time/g) || []).length;
+                sendString = sendString.replaceAll(' 05:30:00.000','');
                 sendString = sendString.replaceAll('start_time:','');
                 sendString = sendString.replaceAll('start_date:','');
                 sendString = sendString.replaceAll('[','');
                 sendString = sendString.replaceAll(']','');
                 sendString = sendString.replaceAll(',','');
-                client.publish('test', countOfSchedule+sendString);
+                console.log("publishing message:",countOfSchedule+sendString);
+                client.publish('spb', countOfSchedule+sendString);
               }
             })
           })
+        var topic="spb";
         client.on('message', function (topic, message) {
         // message is Buffer
         console.log(message.toString())

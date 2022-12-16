@@ -7,4 +7,5 @@ route.get('/mqtt', (req, res)=>{
     });
 });
 
+
 module.exports = route;

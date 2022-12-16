@@ -1,42 +1,39 @@
 <div class="boxContent">
-    <div class="firstRow">
-        <div class="cardOne">
-            <div class="description">
-                <p>MQTT</p>
-                <h3>98765</h3>
-            </div>
-        </div>
-        <div class="cardTwo">
-            <div class="description">
-                <p>Total invoices</p>
-                <h3>98765</h3>
-            </div>
-        </div>
-        <div class="cardThree">
-            <div class="description">
-                <p>Total invoices</p>
-                <h3>98765</h3>
-            </div>
-        </div>
-        <div class="cardFour">
-            <div class="description">
-                <p>Total invoices</p>
-                <h3>98765</h3>
-            </div>
-        </div>
-    </div>
-    <div class="secondRow">
-        <div class="cardChart">
+    <label>Enter Area</label>
+    <input type="text" class="form-control" id="area" placeholder="Enter Area" name="area">
+    <br>
+    <label>Enter Months </label>
+    <input type="text" class="form-control" id="months" placeholder="Enter Months" name="months">
+    <br>
+    <label>Property Tax:</label>
+    <label class="form-control" id="result" name="result"></label>
+    <br>
+    <label>Water Bill:</label>
+    <label class="form-control" id="waterresult" name="result"></label>
 
-        </div>
-        <div class="cardChart">
-
-        </div>
-        <div class="cardChart">
-
-        </div>
-    </div>
-    <div class="thirdRow">
-
-    </div>
-</div>
+    <br>
+    <button onclick="myFunction()">Submit</button>
+    <script>
+        function myFunction() {
+            var area = document.getElementById("area").value;
+            console.log(area);
+            if(area<1000)
+            {
+                document.getElementById("result").innerHTML = 1000;
+            }
+            else if(area>1000 && area<5000)
+            {
+                document.getElementById("result").innerHTML = 3500;
+            }
+            else if(area>5000)
+            {
+                document.getElementById("result").innerHTML = 5000;
+            }
+            var months = document.getElementById("months").value;
+            console.log(months);
+            var water = Number(months)*100;
+            document.getElementById("waterresult").innerHTML = water;
+        }
+      </script>
+  </div>
+  

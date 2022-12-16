@@ -6,7 +6,7 @@ const mysql = require('mysql');
 const app = express();
 const hostconfig = require('./config/host-config');
 const dbconfig = require('./config/db-config');
-const port = hostconfig.port;
+const port = process.env.PORT || 4000;
 
 var spbtable = "spbtable";
 
