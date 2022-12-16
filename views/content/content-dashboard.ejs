@@ -3,29 +3,29 @@
         <div class="cardOne">
             <div class="description">
                 <img src="https://elasticbeanstalk-us-east-1-534882886550.s3.amazonaws.com/images/completed-task.png" width="80px" height="80px"></img>
-                <p>Completed Schedules</p>
-                <h3>345</h3>
+                <p>Total Schedules</p>
+                <h3><%= datax.count %></h3>
             </div>
         </div>
         <div class="cardTwo">
             <div class="description">
                 <img src="https://elasticbeanstalk-us-east-1-534882886550.s3.amazonaws.com/images/failed-tasks.png" width="80px" height="80px"></img>
                 <p>Missed<br>Schedules</p>
-                <h3>15</h3>
+                <h3>4</h3>
             </div>
         </div>
         <div class="cardThree">   
             <div class="description">
                 <img src="https://elasticbeanstalk-us-east-1-534882886550.s3.amazonaws.com/images/upcoming-task.png" width="80px" height="80px"></img>
                 <p>Upcoming Scheudles</p>
-                <h3>4</h3>
+                <h3><%= datay.count %></h3>
             </div>
         </div>
         <div class="cardFour">
             <div class="description">
 
                 <p>Total Schedules</p>
-                <h3>360</h3>
+                <h3><%= datax.count + datay.count %></h3>
             </div>
         </div>
     </div>

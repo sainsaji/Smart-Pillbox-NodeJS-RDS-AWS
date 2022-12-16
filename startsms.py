@@ -10,7 +10,7 @@ import time
 # Your Account SID from twilio.com/console
 account_sid = "ACa17ae3b337557bc9b97062d8fde8427d"
 # Your Auth Token from twilio.com/console
-auth_token  = "2935ae15bb70f47a44f39fe59358d87b"
+auth_token  = "6f9d1d5b03c5f587105e803e3d70e44e"
 
 clientx = Client(account_sid, auth_token)
 
@@ -54,10 +54,7 @@ def subscribe(client: mqtt_client):
                 from_="+16508998979",
                 body="Take Your Pill")
                 print(message.sid)
-                sendSMS = False
-
-            
-            
+                sendSMS = False            
     client.subscribe(topic)
     client.on_message = on_message
     

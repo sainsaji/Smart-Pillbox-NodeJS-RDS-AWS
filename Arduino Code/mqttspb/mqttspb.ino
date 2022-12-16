@@ -5,8 +5,8 @@
 SoftwareSerial s(3,1);
 
 // WiFi
-const char *ssid = "Airtel Broadband"; // Enter your WiFi name
-const char *password = "newbeginning#";  // Enter WiFi password
+const char *ssid = "MCA-IOT"; // Enter your WiFi name
+const char *password = "UZtqSWHh";  // Enter WiFi password
 
 // MQTT Broker
 const char *mqtt_broker = "broker.emqx.io";

@@ -252,16 +252,16 @@ void loop()
       Serial.println("Stripping");
       String stripped = incoming.substring(0,18);
       Serial.println(stripped);
+      Serial.println("Todays Date:");
+      Serial.println(weekDayRead());
+      int countOfSchedule = incoming.substring(0,1).toInt();
+      Serial.print("Number of Schedules:");
+      Serial.println(countOfSchedule);
+      String strippedString = incoming.substring(1);
+      Serial.println("Recived Schedule String");
+      Serial.println(strippedString);
+      dateTimeExtractor(countOfSchedule,strippedString);
+      }
     }
-  Serial.println("Todays Date:");
-  Serial.println(weekDayRead());
-  int countOfSchedule = incoming.substring(0,1).toInt();
-  Serial.print("Number of Schedules:");
-  Serial.println(countOfSchedule);
-  String strippedString = incoming.substring(1);
-  Serial.println("Recived Schedule String");
-  Serial.println(strippedString);
-  dateTimeExtractor(countOfSchedule,strippedString);
-  }
   
 }

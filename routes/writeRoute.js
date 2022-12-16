@@ -75,9 +75,17 @@ route.post('/writeSchedule',(req, res) =>{
             let insQuery = connection.query(sql,[spbtable,data],(err,results)=>{
                 if(err) throw err
                 else console.log("insert sucess");
-        });
-        
-    }
+            });    
+        }
+        let sql2 = "INSERT INTO ?? SET ?";
+        for(var i = 0; i <schedDateArray.length;i++)
+        {
+            data.start_date = schedDateArray[i];
+            let insQuery = connection.query(sql,["scheduletable",data],(err,results)=>{
+                if(err) throw err
+                else console.log("insert into main table success");
+            });    
+        }
     }
     const d1 = new Date(data.start_date);
     var schedDateArray = []

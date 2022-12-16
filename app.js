@@ -7,10 +7,29 @@ const app = express();
 const hostconfig = require('./config/host-config');
 const dbconfig = require('./config/db-config');
 const port = process.env.PORT || 4000;
+const { auth, requiresAuth } = require('express-openid-connect');
+require('dotenv').config();
 
 var spbtable = "spbtable";
 
+//auth
+
+app.use(
+    auth({
+        authRequired: false,
+        auth0Logout: true,
+        issuerBaseURL: process.env.ISSUER_BASE_URL,
+        baseURL: process.env.BASE_URL,
+        clientID: process.env.CLIENT_ID,
+        secret: process.env.SECRET,
+    })
+);
+
+
 //Routes Set-up
+app.get('/profile',requiresAuth(), (req, res) => {
+    res.send(JSON.stringify(req.oidc.user));
+});
 const dashboardRoute = require('./routes/dashboardRoute');
 const calenderRoute = require('./routes/calenderRoute');
 const mqttRoute = require('./routes/mqttRoute');
@@ -19,6 +38,8 @@ const setterRoute = require('./routes/setterRoute');
 const settingsRoute = require('./routes/settingsRoute');
 const testsRoute = require('./routes/testsRoute');
 const writeRoute = require('./routes/writeRoute');
+
+
 
 const connection = mysql.createConnection({
     host:dbconfig.host,

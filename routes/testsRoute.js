@@ -19,10 +19,6 @@ const options = {
     username: 'emqx_testo',
     password: 'emqx_testo',
   }
-  
-  
-
-
 const connection = mysql.createConnection({
     host:dbconfig.host,
     user:dbconfig.user,
@@ -45,7 +41,7 @@ route.post('/writeTest', (req, res)=>{
     {
         const time2 = moment(new Date);
         time2.add(1, "minutes");
-        return time2.format("hh:mm:ss");
+        return time2.format("hh:mm");
     }
     var data = {
         patientname: "test",
@@ -54,7 +50,7 @@ route.post('/writeTest', (req, res)=>{
         pillname: "test",
         pilldesc : "test",
         start_time: getAddedTime(),
-        start_date: moment().format("DD MM YYYY"),
+        start_date: moment().format("YYYY-MM-DD"),
         schedulestatus:"0",
     }
     console.log(data);
@@ -82,7 +78,7 @@ route.post('/writeTest', (req, res)=>{
     }
     function mqttWrite()
     {   
-        var nysqldata = ""
+        var mysqldata = ""
         function getData()
         {
             let sql = "SELECT start_time,start_date FROM ??";
@@ -97,10 +93,18 @@ route.post('/writeTest', (req, res)=>{
         client.on('connect', function () {
             console.log('Connected')
             // Subscribe to a topic
-            client.subscribe('test', function (err) {
+            client.subscribe('spb', function (err) {
               if (!err) {
-                // Publish a message to a topic
-                client.publish('test', JSON.stringify(mysqldata))
+                var sendString = JSON.stringify(mysqldata).replaceAll('"', '');
+                var countOfSchedule = (sendString.match(/start_time/g) || []).length;
+                sendString = sendString.replaceAll(' 05:30:00.000','');
+                sendString = sendString.replaceAll('start_time:','');
+                sendString = sendString.replaceAll('start_date:','');
+                sendString = sendString.replaceAll('[','');
+                sendString = sendString.replaceAll(']','');
+                sendString = sendString.replaceAll(',','');
+                console.log("publishing message:",countOfSchedule+sendString);
+                client.publish('spb', countOfSchedule+sendString)
               }
             })
           })

@@ -4,7 +4,8 @@ const dbconfig = require('../config/db-config');
 const mysql = require('mysql');
 var spbtable = "spbtable";
 const mqtt = require('mqtt')
-const client = require("twilio")("ACa17ae3b337557bc9b97062d8fde8427d", "2935ae15bb70f47a44f39fe59358d87b");
+const { auth, requiresAuth } = require('express-openid-connect');
+require('dotenv').config();
 
 
 const connection = mysql.createConnection({
@@ -31,7 +32,7 @@ const options = {
   }
 
 
-route.get('/calendar', (req, res)=>{
+route.get('/calendar',requiresAuth(), (req, res)=>{
     let sql = "SELECT * FROM ??";
     let query = connection.query(sql,[spbtable],(err,rows,res1)=>{
         if(err) throw err;

@@ -50,6 +50,12 @@ route.get('/setter',(req, res)=>{
         console.log("create test table query run");
     });
 
+    let sql4 = "CREATE TABLE IF NOT EXISTS ?? (ID int AUTO_INCREMENT NOT NULL,patientname VARCHAR(255),caretaker VARCHAR(255),pillname varchar(255),pilldesc varchar(255),caretakernum varchar(255),start_time varchar(255),start_date varchar(255),schedulestatus boolean not null default 0 ,PRIMARY KEY(ID))"
+    let allSchedules = connection.query(sql3,["scheduletable"],(err,rows)=>{
+        if(err) throw err;
+        console.log("Main Schedule Created");
+    });
+
 });
 
 module.exports = route;
